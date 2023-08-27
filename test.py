@@ -1,6 +1,8 @@
 import sys
 import pygame
-from pygame.locals import QUIT, KEYDOWN, K_UP, K_DOWN, K_RIGHT, K_LEFT
+from pygame.locals import (QUIT, KEYDOWN,
+                           K_UP, K_DOWN, K_RIGHT, K_LEFT,
+                           K_SPACE, K_ESCAPE, K_1)
 
 # ゲーム画面を初期化
 pygame.init()
@@ -23,7 +25,7 @@ py = 0
 
 # キー入力を処理
 def push_key(key):
-    global px, py
+    global px, py, player
     if key == K_UP:
         py = max(0, py - 1)
     elif key == K_DOWN:
@@ -32,6 +34,18 @@ def push_key(key):
         px = min(2, px + 1)
     elif key == K_LEFT:
         px = max(0, px - 1)
+    elif key == K_SPACE:
+        if board_status[py][px] == 0:
+            board_status[py][px] = player
+            if player == 1:
+                player = 2
+            else:
+                player = 1
+    elif key == K_1:
+        reset_board()
+    elif key == K_ESCAPE:
+        pygame.quit()
+        sys.exit()
 
 
 # 終了フラグ
