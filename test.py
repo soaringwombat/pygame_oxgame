@@ -36,6 +36,37 @@ def draw_x(x, y):
                      (x * 150 + 300, y * 150 + 100), 5)
 
 
+# 列ができているか判定
+def check_column():
+    if board_status[0][0] == board_status[1][0] == board_status[2][0] != 0:
+        return True
+    elif board_status[0][1] == board_status[1][1] == board_status[2][1] != 0:
+        return True
+    elif board_status[0][2] == board_status[1][2] == board_status[2][2] != 0:
+        return True
+    elif board_status[0][0] == board_status[1][1] == board_status[2][2] != 0:
+        return True
+    elif board_status[0][2] == board_status[1][1] == board_status[2][0] != 0:
+        return True
+    elif board_status[0][0] == board_status[0][1] == board_status[0][2] != 0:
+        return True
+    elif board_status[1][0] == board_status[1][1] == board_status[1][2] != 0:
+        return True
+    elif board_status[2][0] == board_status[2][1] == board_status[2][2] != 0:
+        return True
+    else:
+        return False
+
+
+# 引き分けの判定
+def check_draw():
+    for x in range(3):
+        for y in range(3):
+            if board_status[y][x] == 0:
+                return False
+    return True
+
+
 # キー入力を処理
 def push_key(key):
     global px, py, player
@@ -80,15 +111,12 @@ def main():
     while True:
         # 画面を背景色でクリア
         screen.fill(back)
-
         # ボード背景の描画
         pygame.draw.rect(screen, Green, (175, 75, 450, 450))
         pygame.draw.line(screen, black, (325, 75), (325, 525), 5)
         pygame.draw.line(screen, black, (475, 75), (475, 525), 5)
         pygame.draw.line(screen, black, (175, 225), (625, 225), 5)
         pygame.draw.line(screen, black, (175, 375), (625, 375), 5)
-
-
         # ボードの描画
         for x in range(3):
             for y in range(3):
@@ -96,11 +124,32 @@ def main():
                     draw_circle(x, y)
                 elif board_status[y][x] == 2:
                     draw_x(x, y)
-
-
         # 選択中のマスを描画
         pygame.draw.rect(screen, white,
                          (175 + px * 150, 75 + py * 150, 150, 150), 5)
+        # 列判定
+        if check_column():
+            end_flag = True
+        # 引き分け判定
+        if check_draw():
+            end_flag = True
+
+        # # 終了を判定して表示
+        # if end_flag:
+        #     pygame.draw.rect(screen, white, (175, 0, 450, 75))
+        #     if check_column():
+        #         if player == 1:
+        #             font = pygame.font.SysFont(None, 100)
+        #             text = font.render("○の勝ち", True, black)
+        #             screen.blit(text, (200, 10))
+        #         else:
+        #             font = pygame.font.SysFont(None, 100)
+        #             text = font.render("×の勝ち", True, black)
+        #             screen.blit(text, (200, 10))
+        #     else:
+        #         font = pygame.font.SysFont(None, 100)
+        #         text = font.render("引き分け", True, black)
+        #         screen.blit(text, (200, 10))
 
         # 画面を更新
         pygame.display.update()
