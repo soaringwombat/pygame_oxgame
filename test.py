@@ -23,6 +23,19 @@ px = 0  # プレイヤーの位置
 py = 0
 
 
+# ○の表示
+def draw_circle(x, y):
+    pygame.draw.circle(screen, black, (x * 150 + 250, y * 150 + 150), 50, 5)
+
+
+# ×の表示
+def draw_x(x, y):
+    pygame.draw.line(screen, black, (x * 150 + 200, y * 150 + 100),
+                     (x * 150 + 300, y * 150 + 200), 5)
+    pygame.draw.line(screen, black, (x * 150 + 200, y * 150 + 200),
+                     (x * 150 + 300, y * 150 + 100), 5)
+
+
 # キー入力を処理
 def push_key(key):
     global px, py, player
@@ -68,12 +81,22 @@ def main():
         # 画面を背景色でクリア
         screen.fill(back)
 
-        # ボードの描画
+        # ボード背景の描画
         pygame.draw.rect(screen, Green, (175, 75, 450, 450))
         pygame.draw.line(screen, black, (325, 75), (325, 525), 5)
         pygame.draw.line(screen, black, (475, 75), (475, 525), 5)
         pygame.draw.line(screen, black, (175, 225), (625, 225), 5)
         pygame.draw.line(screen, black, (175, 375), (625, 375), 5)
+
+
+        # ボードの描画
+        for x in range(3):
+            for y in range(3):
+                if board_status[y][x] == 1:
+                    draw_circle(x, y)
+                elif board_status[y][x] == 2:
+                    draw_x(x, y)
+
 
         # 選択中のマスを描画
         pygame.draw.rect(screen, white,
