@@ -127,29 +127,22 @@ def main():
         # 選択中のマスを描画
         pygame.draw.rect(screen, white,
                          (175 + px * 150, 75 + py * 150, 150, 150), 5)
-        # 列判定
-        if check_column():
-            end_flag = True
-        # 引き分け判定
-        if check_draw():
-            end_flag = True
 
-        # # 終了を判定して表示
-        # if end_flag:
-        #     pygame.draw.rect(screen, white, (175, 0, 450, 75))
-        #     if check_column():
-        #         if player == 1:
-        #             font = pygame.font.SysFont(None, 100)
-        #             text = font.render("○の勝ち", True, black)
-        #             screen.blit(text, (200, 10))
-        #         else:
-        #             font = pygame.font.SysFont(None, 100)
-        #             text = font.render("×の勝ち", True, black)
-        #             screen.blit(text, (200, 10))
-        #     else:
-        #         font = pygame.font.SysFont(None, 100)
-        #         text = font.render("引き分け", True, black)
-        #         screen.blit(text, (200, 10))
+        # 終了を判定して表示
+        if check_column():
+            if player == 1:
+                font = pygame.font.Font('font_black.ttf', 50)
+                text = font.render(U"×の勝ち", True, black)
+                screen.blit(text, (200, 10))
+            else:
+                font = pygame.font.Font('font_black.ttf', 50)
+                text = font.render(U"〇の勝ち", True, black)
+                screen.blit(text, (200, 10))
+                
+        if check_draw():
+                font = pygame.font.Font('font_black.ttf', 50)
+                text = font.render(U"引き分け", True, black)
+                screen.blit(text, (200, 10))
 
         # 画面を更新
         pygame.display.update()
